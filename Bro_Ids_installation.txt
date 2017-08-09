@@ -1,0 +1,33 @@
+##Installing Bro IDS
+###https://www.digitalocean.com/community/tutorials/how-to-install-bro-ids-2-2-on-ubuntu-12-04
+
+
+apt-get update && apt-get upgrade
+apt-get install cmake make gcc g++ flex bison libpcap-dev libgeoip-dev libssl-dev python-dev zlib1g-dev libmagic-dev swig2.0
+
+
+wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+wget http://geolite.maxmind.com/download/geoip/database/GeoLiteCityv6-beta/GeoLiteCityv6.dat.gz
+gunzip GeoLiteCity.dat.gz
+gunzip GeoLiteCityv6.dat.gz
+
+mv GeoLiteCity.dat  /usr/share/GeoIP/GeoLiteCity.dat
+mv GeoLiteCityv6.dat /usr/share/GeoIP/GeoLiteCityv6.dat
+
+ln -s /usr/share/GeoIP/GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat
+ln -s /usr/share/GeoIP/GeoLiteCityv6.dat /usr/share/GeoIP/GeoIPCityv6.dat
+
+https://www.bro.org/downloads/bro-2.4.1.tar.gz
+tar -xvzf bro-2.4.1.tar.gz
+cd bro-2.4.1
+./configure --prefix=/nsm/bro
+make
+make install
+
+export PATH=/nsm/bro/bin:$PATH
+/nsm/bro/bin/broctl
+>install
+
+vim /nsm/bro/etc/node.cfg
+vim /nsm/bro/etc/networks.cfg 
+vim /nsm/bro/etc/broctl.cfg
